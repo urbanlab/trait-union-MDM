@@ -77,6 +77,12 @@ io.on('connection', function(socket){
     var date = getDateSlug();
     
     try {
+      var isAnythingToday = db.getData("/"+date+"");
+    } catch (error) {
+      db.push("/"+date+"", { floors : [] }, true);    
+    }
+    
+    try {
       if (db.getData("/"+date+"/floors["+data.floor+"]") == null) {
         db.push("/"+date+"/floors["+data.floor+"]", { moods : [] }, true);
       }
@@ -128,12 +134,20 @@ server.listen(CONFIG.site.port, function(){
 
 
 function fetchFreshData() {
+  
     var date = getDateSlug();
   	//////////////////////
     //
     //  Fetch fresh data
     
     var statsByFloor = {floors: [], moods: {}, moyMood: { mood: null, nb: 0 }};
+    
+    try {
+      var isAnythingToday = db.getData("/"+date+"");
+    } catch (error) {
+      db.push("/"+date+"", { floors : [] }, true);    
+    }
+    
     
     var moodsOfFloorsOfToday = db.getData("/"+date);
     
