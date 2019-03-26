@@ -28,11 +28,16 @@ html, body {
 }
 
 
-
+p {
+  font-family: Overpass;
+}
 
 .titre {
   width: 70%;
 }
 .pictos {
-    width: 10%;
+    width: 150px;
+}
+.mood {
+  display: inline-block;
 }
