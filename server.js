@@ -55,7 +55,8 @@ express.get('/actus/', function (req, res) {
 	
 express.post('/newmail', function (req, res) { 
   console.log('New mail');
-  console.log(req);
+  
+  console.log(req.body);
    
   io.sockets.emit('newmail/to/client',{coucou:'hey'});
   res.sendStatus(200);
