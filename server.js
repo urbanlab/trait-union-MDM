@@ -118,23 +118,6 @@ app.get('/floor/:floor/', function (req, res) {
     stats               : stats
   });
 });
-
-app.get('/actus/', function (req, res) {  
-
-  parser.parseURL('https://met.grandlyon.com/feed/', function(err, feed) {
-    console.log(feed.title);
-   
-    feed.items.forEach(item => {
-      console.log(item.title + ' : ' + item.link)
-    });
-    
-    res.render( __dirname + '/app/views/actus', {
-      BASEURL             : CONFIG.site.baseURL,
-      actus : feed.items
-    });
-  });
-  
-});
 	
 app.post('/newmail', function (req, res) { 
   console.log('New mail');
