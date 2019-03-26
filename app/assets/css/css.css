@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Overpass+Mono');
+
 html, body {
   width:100%;
   height:100%;
   background:#C5FFE1;
+  margin: 0;
 }
 
 .cols {
@@ -28,16 +31,30 @@ html, body {
 }
 
 
-p {
-  font-family: Overpass;
+h1 {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.titre {
+  width: 60%;
 }
 
-.titre {
-  width: 70%;
+p {
+  font-family: 'Overpass', sans-serif;
+  text-align: center;
 }
-.pictos {
-    width: 150px;
+
+.aligner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .mood {
+  margin: 60px;
   display: inline-block;
+}
+.pictos {
+  width: 120px;
+  justify-content: space-between;
 }
