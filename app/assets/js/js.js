@@ -2,6 +2,16 @@ var socket = io(BASEURL);
 
 $(function(){
     
+  $(document).on('click', function(){
+    $.ajax({
+      type: "POST",
+      url: BASEURL+'/newmail',
+      data: {
+        body_plain_fake: 'hi, i am a mail',
+        subject: 'yo'
+      }
+    });
+  });
       
   socket.emit('connectedId', {floor: floor});
   
