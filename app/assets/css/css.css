@@ -1,0 +1,28 @@
+html, body {
+  width:100%;
+  height:100%;
+  background:#ddd
+}
+
+.cols {
+  display:flex;
+}
+
+.topmood {
+  flex: 1;
+  background:white;
+  border-radius:5px;
+  padding:20px;
+}
+
+.floors {
+  flex: 1;
+  padding:20px;
+}
+
+.floor {
+  background:white;
+  border-radius:5px;
+  padding:20px;
+  margin-bottom:10px;
+}

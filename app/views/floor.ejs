@@ -1,0 +1,64 @@
+<link href="<%= BASEURL %>/assets/css/normalize.css" rel='stylesheet' type='text/css'>
+<link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
+
+Floor <%= floor %>
+
+<h1>Vous vous sentez d'humeur…</h1>
+
+<div class="mood" data-value="jazz">Jazz</div>
+<div class="mood" data-value="techno">Techno</div>
+<div class="mood" data-value="drum">Drum'n'bass</div>
+<div class="mood" data-value="disco">Ddisco</div>
+
+<hr>
+
+<div class="reactive-zone">
+  <div class="cols">
+    
+    <div class="topmood">
+      <%= stats.moyMood.mood %>
+    </div>
+    
+    <div class="floors">
+      
+      <% for (var floorIndex = 0; floorIndex < stats.floors.length; floorIndex++) { %>
+    
+        <div class="floor">
+          <div class="floor-index">
+            <%= floorIndex %>
+          </div>
+          
+          <div class="floor-mood">
+            <%= stats.floors[floorIndex].topMood.mood %>
+          </div>
+        </div>
+    
+      <% } %>
+    </div>
+  
+  </div>
+</div>
+
+
+
+
+<div class="actus">
+  
+  waiting for actus
+  
+</div>
+
+
+
+
+
+
+<script>
+  var BASEURL = '<%= BASEURL %>';
+  var floor = '<%= floor %>';
+</script>
+
+<script src="<%= BASEURL %>/assets/lib/jquery-2.2.4.min.js"></script>
+<script src="<%= BASEURL %>/assets/lib/socket.io-1.2.0.js"></script>
+<script src="<%= BASEURL %>/assets/js/js.js"></script>
+
