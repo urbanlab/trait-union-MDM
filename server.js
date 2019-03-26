@@ -53,7 +53,7 @@ express.get('/actus/', function (req, res) {
   
 });
 	
-express.get('/newmail', function (req, res) { 
+express.post('/newmail', function (req, res) { 
   console.log('New mail');
   console.log(req);
    
