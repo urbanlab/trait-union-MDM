@@ -16,59 +16,16 @@ let parser            = new Parser();
 var JsonDB            = require('node-json-db');
 var db = new JsonDB("app/db/trait-union", true, true);
 
-express.use( serveStatic( __dirname + '/app/' ) );
-express.use( bodyParser.urlencoded({
-  extended: true
-}));
-
-express.set( 'view engine', 'ejs' );
-
-express.get('/floor/:floor/', function (req, res) {  
-   
-  var floor = req.params.floor;
-  
-  var stats = fetchFreshData();
-  
-  res.render( __dirname + '/app/views/floor', {
-    BASEURL             : CONFIG.site.baseURL,
-    floor               : floor,
-    stats               : stats
-  });
-});
-
-express.get('/actus/', function (req, res) {  
-
-  parser.parseURL('https://met.grandlyon.com/feed/', function(err, feed) {
-    console.log(feed.title);
-   
-    feed.items.forEach(item => {
-      console.log(item.title + ' : ' + item.link)
-    });
-    
-    res.render( __dirname + '/app/views/actus', {
-      BASEURL             : CONFIG.site.baseURL,
-      actus : feed.items
-    });
-  });
-  
-});
-
 
 /////////////////////////
 
 io.on('connection', function(socket){
   console.log('New client is connected');
-//  io.sockets.emit('connectedId',data);
-  /*
-  socket.on('connectedId', function(data) {
-    console.log('connectedId : '+data.id);
-    
-    socket.id = data.id;
-    socket.join('/'+socket.id);
-    
-    io.sockets.emit('connectedId',data);
-	});
-	*/
+	
+	socket.on('newmail/to/server', function(data) {  
+  	  console.log('NEW MAIL');
+  	  console.log(data);
+  });
 	
 	socket.on('mood/to/server', function(data) {  
     
@@ -124,13 +81,73 @@ io.on('connection', function(socket){
 });
 
 
+
+/////////
+
+
+
+
+express.use(function(req,res,next){
+  req.io = io;
+  next();
+})
+
+express.use( serveStatic( __dirname + '/app/' ) );
+express.use( bodyParser.urlencoded({
+  extended: true
+}));
+
+express.set( 'view engine', 'ejs' );
+
+express.get('/floor/:floor/', function (req, res) {  
+   
+  var floor = req.params.floor;
+  
+  var stats = fetchFreshData();
+  
+  res.render( __dirname + '/app/views/floor', {
+    BASEURL             : CONFIG.site.baseURL,
+    floor               : floor,
+    stats               : stats
+  });
+});
+
+express.get('/actus/', function (req, res) {  
+
+  parser.parseURL('https://met.grandlyon.com/feed/', function(err, feed) {
+    console.log(feed.title);
+   
+    feed.items.forEach(item => {
+      console.log(item.title + ' : ' + item.link)
+    });
+    
+    res.render( __dirname + '/app/views/actus', {
+      BASEURL             : CONFIG.site.baseURL,
+      actus : feed.items
+    });
+  });
+  
+});
+	
+express.post('/newmail', function (req, res) { 
+  console.log('New mail');
+  
+  console.log(req.body);
+   
+  req.io.sockets.emit('newmail/to/client',{coucou:'hey'});
+  
+  res.sendStatus(200);
+});
+
+
+
+
+
 server.listen(CONFIG.site.port, function(){
   console.log('Listening on *:'+CONFIG.site.port);
 });
 
-
 /////////
-
 
 
 function fetchFreshData() {

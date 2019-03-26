@@ -39,6 +39,10 @@ $(function(){
   });
     
     
+  socket.on('newmail/to/client', function(data){
+    console.log('NEW MAIL!');
+  });
+    
 
   $('.actus').load('/actus');
 

@@ -1,0 +1,15 @@
+<script>
+  var BASEURL = '<%= BASEURL %>';
+</script>
+
+<script src="<%= BASEURL %>/assets/lib/jquery-2.2.4.min.js"></script>
+<script src="<%= BASEURL %>/assets/lib/socket.io-1.2.0.js"></script>
+
+<script type="text/javascript">
+  var socket = io(BASEURL);
+  
+  $(function(){      
+    socket.emit('newmail/to/server', {hey:'yo'});
+  });
+
+</script>
