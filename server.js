@@ -70,6 +70,16 @@ io.on('connection', function(socket){
 	});
 	*/
 	
+	
+  express.get('/newmail/', function (req, res) {  
+    
+    console.log(req);
+    
+    console.log(res);
+    
+    io.sockets.emit('newmail/to/client',{req: req, res:res});
+  });
+	
 	socket.on('mood/to/server', function(data) {  
     
   //  console.log(getDateSlug());
