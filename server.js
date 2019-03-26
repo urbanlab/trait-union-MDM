@@ -52,7 +52,14 @@ express.get('/actus/', function (req, res) {
   });
   
 });
-
+	
+express.get('/newmail', function (req, res) { 
+  console.log('New mail');
+  console.log(req);
+   
+  io.sockets.emit('newmail/to/client',{coucou:'hey'});
+  res.sendStatus(200);
+});
 
 /////////////////////////
 
@@ -70,14 +77,9 @@ io.on('connection', function(socket){
 	});
 	*/
 	
-	
-  express.get('/newmail/', function (req, res) {  
-    
-    console.log(req);
-    
-    console.log(res);
-    
-    io.sockets.emit('newmail/to/client',{req: req, res:res});
+	socket.on('newmail/to/server', function(data) {  
+  	  console.log('NEW MAIL');
+  	  console.log(data);
   });
 	
 	socket.on('mood/to/server', function(data) {  
