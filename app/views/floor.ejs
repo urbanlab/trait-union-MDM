@@ -2,11 +2,15 @@
 <link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
 
 <!--%= floor %-->
+<body id="style">
+
 
 <h1> <img class="titre" src="../assets/img/ambiance.png" alt="quelle ambiance ?!"> </h1>
 
 <div class="aligner">
-<div class="mood" data-value="relax"> <img class="pictos" src="../assets/img/relax.png" alt="relax"></div>
+<div class="mood" data-value="relax"> <img class="pictos" src="../assets/img/relax.png" alt="relax"
+   type="button" value="Click!" onClick="document.getElementById('style').style.backgroundColor='red'">
+</div>
 <div class="mood" data-value="classique"> <img class="pictos" src="../assets/img/classique.png" alt="classique"></div>
 <div class="mood" data-value="swing"> <img class="pictos" src="../assets/img/swing.png" alt="swing"></div>
 <div class="mood" data-value="disco"><img class="pictos" src="../assets/img/disco.png" alt="disco"></div>
@@ -14,9 +18,9 @@
 </div>
 
 <div class="texte">
-<p>En ce moment, <br>
+<p class="moyenne">En ce moment, <br>
  vous êtes tou·te·s très swing !</p>
-<p>Comment ça se passe dans chaque MDM ?</p>
+<p class="ailleurs">Comment ça se passe dans chaque MDM ?</p>
 </div>
 
 <hr>
@@ -70,3 +74,5 @@
 <script src="<%= BASEURL %>/assets/lib/jquery-2.2.4.min.js"></script>
 <script src="<%= BASEURL %>/assets/lib/socket.io-1.2.0.js"></script>
 <script src="<%= BASEURL %>/assets/js/js.js"></script>
+
+</body>
