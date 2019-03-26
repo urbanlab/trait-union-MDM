@@ -1,10 +1,17 @@
 var CONFIG            = require('./config.js');
 
 var path              = require('path');
-var express           = require('express')();
 
+/*
+var express           = require('express')();
 var server            = require('http').Server(express);
 var io                = require('socket.io')(server);
+*/
+
+var app               = require('express')();
+var http              = require('http').Server(app);
+var io                = require('socket.io')(http);
+
 var serveStatic       = require('serve-static');
 var fs                = require("fs");
 var bodyParser        = require('body-parser');
@@ -87,19 +94,19 @@ io.on('connection', function(socket){
 
 
 
-express.use(function(req,res,next){
+app.use(function(req,res,next){
   req.io = io;
   next();
 })
 
-express.use( serveStatic( __dirname + '/app/' ) );
-express.use( bodyParser.urlencoded({
+app.use( serveStatic( __dirname + '/app/' ) );
+app.use( bodyParser.urlencoded({
   extended: true
 }));
 
-express.set( 'view engine', 'ejs' );
+app.set( 'view engine', 'ejs' );
 
-express.get('/floor/:floor/', function (req, res) {  
+app.get('/floor/:floor/', function (req, res) {  
    
   var floor = req.params.floor;
   
@@ -112,7 +119,7 @@ express.get('/floor/:floor/', function (req, res) {
   });
 });
 
-express.get('/actus/', function (req, res) {  
+app.get('/actus/', function (req, res) {  
 
   parser.parseURL('https://met.grandlyon.com/feed/', function(err, feed) {
     console.log(feed.title);
@@ -129,9 +136,8 @@ express.get('/actus/', function (req, res) {
   
 });
 	
-express.post('/newmail', function (req, res) { 
+app.post('/newmail', function (req, res) { 
   console.log('New mail');
-  
   console.log(req.body);
    
   req.io.sockets.emit('newmail/to/client',{coucou:'hey'});
@@ -143,7 +149,7 @@ express.post('/newmail', function (req, res) {
 
 
 
-server.listen(CONFIG.site.port, function(){
+http.listen(CONFIG.site.port, function(){
   console.log('Listening on *:'+CONFIG.site.port);
 });
 
