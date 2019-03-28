@@ -1,17 +1,6 @@
 var socket = io(BASEURL);
 
 $(function(){
-    
-  $(document).on('click', function(){
-    $.ajax({
-      type: "POST",
-      url: BASEURL+'/newmail',
-      data: {
-        body_plain_fake: 'hi, i am a mail',
-        subject: 'yo'
-      }
-    });
-  });
       
   socket.emit('connectedId', {place: place});
   
@@ -68,7 +57,8 @@ $(function(){
     $('.reactive-zone').load('/place/'+place+' .cols');
 
   });
-    
+  
+  $('.actus').load('/mails .actus_inner');
     
   socket.on('newmail/to/client', function(data){
     console.log('NEW MAIL!');
