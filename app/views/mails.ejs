@@ -1,12 +1,12 @@
 <div class="actus_inner">
 
-MAILS : 
-
 <% for (var i = 0; i < mails.length; i++) { %>
-    
+
   <div class="bulle">
-    <%= mails[i].subject %>
-    <%= mails[i].body %>
+  <div class="objet"> <%= mails[i].subject %> </div>
+  <div class="objet"> <%= mails[i].body %> </div>
+  <div class="objet"> <%= mails[i].from__name %> </div>
+  <div class="objet"> <%= mails[i].from_mail %> </div>
   </div>
 <% } %>
 
