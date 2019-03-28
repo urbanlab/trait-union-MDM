@@ -83,10 +83,22 @@ $(function(){
       mood: $(this).data('value')
     });
     
-    var son = $('.son[data-mood="'+$(this).data('value')+'"][data-i="'+parseInt(Math.random() * 5)+'"]')[0];
-    son.pause();
-    son.currentTime = 0;
-    son.play();
+    var randomI = parseInt(Math.random() * 5) + 1;
+    
+    var son = $('.son[data-mood="'+$(this).data('value')+'"][data-i="'+randomI+'"]');
+    
+    $('.son.playing').each(function(){
+      var sonPlaying = $(this);
+      if ((!sonPlaying[0].paused || sonPlaying[0].currentTime) && son != sonPlaying) {
+        sonPlaying[0].pause();
+      }
+      sonPlaying.removeClass('playing');
+    });
+    
+    son.addClass('playing');
+    son[0].pause();
+    son[0].currentTime = 0;
+    son[0].play();
   });
   
   $('[data-refresh]').on('click', function(){
