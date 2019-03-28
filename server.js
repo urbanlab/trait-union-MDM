@@ -148,7 +148,7 @@ app.post('/newmail', function (req, res) {
   console.log('New mail');
   console.log(req.body);
    
-  req.io.sockets.emit('newmail/to/client',{coucou:'hey'});
+  req.io.sockets.emit('newmail/to/client',{req:req.body});
   
   res.sendStatus(200);
 });
