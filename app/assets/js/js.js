@@ -82,6 +82,11 @@ $(function(){
       place: place,
       mood: $(this).data('value')
     });
+    
+    var son = $('.son[data-mood="'+$(this).data('value')+'"][data-i="'+parseInt(Math.random() * 5)+'"]')[0];
+    son.pause();
+    son.currentTime = 0;
+    son.play();
   });
   
   $('[data-refresh]').on('click', function(){

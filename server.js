@@ -39,6 +39,7 @@ var places = [
   'Lyon 9',
 ];
 
+var moods = ['relax', 'classique', 'swing', 'disco', 'energie'];
 
 /////////////////////////
 
@@ -54,13 +55,11 @@ io.on('connection', function(socket){
     
   //  console.log(getDateSlug());
   
+    
+    checkDb();
     var date = getDateSlug();
     
-    try {
-      var isAnythingToday = db.getData("/"+date+"");
-    } catch (error) {
-      db.push("/"+date+"", { places : [] }, true);    
-    }
+    var isAnythingToday = db.getData("/"+date+"");    
     
     try {
       if (db.getData("/"+date+"/places["+data.place+"]") == null) {
@@ -123,6 +122,8 @@ app.use( bodyParser.urlencoded({
 app.set( 'view engine', 'ejs' );
 
 app.get('/place/:place/', function (req, res) {  
+  
+  checkDb();
    
   var place = req.params.place;
   
@@ -132,7 +133,8 @@ app.get('/place/:place/', function (req, res) {
     BASEURL             : CONFIG.site.baseURL,
     place               : place,
     stats               : stats,
-    places              : places
+    places              : places,
+    moods               : moods
   });
 });
 
@@ -163,17 +165,15 @@ app.post('/newmail', function (req, res) {
 });
 
 app.get('/mails', function (req, res) { 
-  
+  console.log('GET /mails : get emails from db:');
   try {
-    if (db.getData("/mails") == null) {
-      db.push("/mails", [], true);
-    }
     var mailMessages = db.getData("/mails");
   } catch(error) {
+    db.push("/mails", [], true);
+      
     var mailMessages = db.getData("/mails");
   } 
   
-  console.log('GET /mails : get emails from db:');
   console.log(mailMessages);
   console.log('/end db');
   
@@ -190,6 +190,37 @@ http.listen(CONFIG.site.port, function(){
 });
 
 /////////
+
+
+function checkDb() {
+  var date = getDateSlug();
+  
+  try {
+    var allOk = db.getData('/'+date+'');
+  } catch(error) {
+    console.log('Empty day, let\'s set the structure');
+      
+    var emptyDateObjectForDb = {
+      places: []
+    };
+      
+    console.dir(emptyDateObjectForDb, { depth:null } );
+    
+    for (var i = 0; i < places.length; i++) {
+      emptyDateObjectForDb.places.push({ moods: [] });
+      
+      console.dir(emptyDateObjectForDb, { depth:null } );
+      
+      emptyDateObjectForDb.places[i].moods.push({
+        mood: moods[parseInt(Math.random() * moods.length)]
+      });
+    }
+    
+    db.push("/"+date+"", emptyDateObjectForDb, true); 
+  }
+    
+   
+}
 
 
 function fetchFreshData() {

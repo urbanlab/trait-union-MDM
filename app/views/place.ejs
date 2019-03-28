@@ -17,7 +17,11 @@
 <p class="moyenne">En ce moment, <br>
  vous êtes tou·te·s très <span data-reactive-container-of="topmood">swing</span> !</p>
  
- 
+<% for (var index in moods) { 
+  for (var i = 1; i <= 5; i++) { %>
+  <audio src="<%= BASEURL %>/assets/son/<%= moods[index] %>/<%= i %>.mp3" class="son" data-mood="<%= moods[index] %>" data-i="<%= i %>" preload></audio>
+<% } } %>
+
  
 <p class="ailleurs">Comment ça se passe dans chaque MDM ?</p>
 </div>
