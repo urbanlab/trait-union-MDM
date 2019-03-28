@@ -173,9 +173,11 @@ app.get('/mails', function (req, res) {
     var mailMessages = db.getData("mails");
   } 
   
+  console.log(mailMessages);
+  
   res.render( __dirname + '/app/views/mails', {
     BASEURL             : CONFIG.site.baseURL,
-    mails : mailMessages
+    mails               : mailMessages
   });  
 });
 
