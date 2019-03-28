@@ -57,6 +57,7 @@ html {
 p {
   font-family: 'Overpass', sans-serif;
   text-align: center;
+  font-size: 20px;
 }
 
 .aligner {
@@ -87,29 +88,31 @@ p {
   justify-content: space-between;
 }
 
-.mail {
-  padding-bottom: 80px;
-}
 
 .bulle {
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
 
-  margin-top: 30px;
-  margin-right: 200px;
-  margin-left: 200px;
+  width: fit-content;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
   background-color: white;
+
+  border-style: solid;
+  border-width: 25px;
+  border-color: white;
+  border-radius: 200px;
 
   text-align: center;
   font-family: 'Overpass', sans-serif;
-
-  border-style: solid;
-  border-color: white;
-  border-width: thick;
-  border-radius: 10px;
+  font-size: 20px;
 }
-
 .objet {
-  display: inline-block;
+ font-weight: bolder;
+}
+.mail, .nom {
+  color: grey;
+  font-size: 18px;
 }

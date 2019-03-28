@@ -1,12 +1,19 @@
 <div class="actus_inner">
+<<<<<<< HEAD
+  <link href="<%= BASEURL %>/assets/css/normalize.css" rel='stylesheet' type='text/css'>
+  <link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
+  
+<% for (var i = 0; i < mails.length; i++) { %>
+=======
 
 <% for (var i = mails.length-1; i > 0; i--) { %>
+>>>>>>> ab5f416098bc04d5d0bb4e73789ed71364fd6489
 
   <div class="bulle">
   <div class="objet"> <%= mails[i].subject %> </div>
-  <div class="objet"> <%= mails[i].body %> </div>
-  <div class="objet"> <%= mails[i].from__name %> </div>
-  <div class="objet"> <%= mails[i].from_mail %> </div>
+  <div class="corps"> <%= mails[i].body %> </div>
+  <div class="nom"> <%= mails[i].from_name %> </div>
+  <div class="mail"> <%= mails[i].from_mail %> </div>
   </div>
 <% } %>
 
