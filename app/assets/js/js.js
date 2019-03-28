@@ -73,6 +73,8 @@ $(function(){
   socket.on('newmail/to/client', function(data){
     console.log('NEW MAIL!');
     console.log(data);
+    
+    $('.actus').load('/mails .actus_inner');
   });
     
     

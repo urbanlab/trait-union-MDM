@@ -145,15 +145,31 @@ app.get('/places', function (req, res) {
 });
 	
 app.post('/newmail', function (req, res) { 
-  console.log('New mail');
-  console.log(req.body);
+  console.log('New mail!');
+//  console.log(req.body);
+  
+  db.push("/mails[]", { 
+    subject   : req.body.subject,
+    body      : req.body.body_plain,
+    from_name : req.body.from__name,
+    from_mail : req.body.from__email
+  }, true);    
+  
+  var mailMessages = db.getData("/mails");
    
-  req.io.sockets.emit('newmail/to/client',{req:req.body});
+  req.io.sockets.emit('newmail/to/client',{ mails: mailMessages });
   
   res.sendStatus(200);
 });
 
-
+app.get('/mails/', function (req, res) {  
+  var mailMessages = db.getData("/mails");
+  
+  res.render( __dirname + '/app/views/mails', {
+    BASEURL             : CONFIG.site.baseURL,
+    mails : mailMessages
+  });  
+});
 
 
 
