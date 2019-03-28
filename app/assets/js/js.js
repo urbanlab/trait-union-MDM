@@ -13,11 +13,11 @@ $(function(){
     });
   });
       
-  socket.emit('connectedId', {floor: floor});
+  socket.emit('connectedId', {place: place});
   
   socket.on('ping', function(data){
-    console.log(floor);
-    socket.emit('pong', {beat: 1, floor: floor});
+    console.log(place);
+    socket.emit('pong', {beat: 1, place: place});
   });
   
   socket.on('refresh', function(){
@@ -30,16 +30,16 @@ $(function(){
     
     console.dir(data, { depth: null} );
 
-    for(var floor in data.stats.floors) {
+    for(var place in data.stats.places) {
       
       /*
-      for (var mood in data.stats.floors[floor].moods) {
+      for (var mood in data.stats.places[place].moods) {
         console.log(mood);
-        console.log(data.stats.floors[floor].moods[mood]);
+        console.log(data.stats.places[place].moods[mood]);
       }
       */
       
-      console.dir('TOP of floor '+floor+' : '+data.stats.floors[floor].topMood.mood+' ('+data.stats.floors[floor].topMood.nb+')');
+      console.dir('TOP of place '+place+' : '+data.stats.places[place].topMood.mood+' ('+data.stats.places[place].topMood.nb+')');
     }
     
     console.dir('MOY : '+data.stats.moyMood.mood+' ('+data.stats.moyMood.nb+')');
@@ -62,14 +62,17 @@ $(function(){
         
     $('.mood.top').removeClass('top');
     topMoodItem.addClass('top');
+    
+    $('[data-reactive-container-of="topmood"]').text(data.stats.moyMood.mood);
         
-    $('.reactive-zone').load('/floor/'+floor+' .cols');
+    $('.reactive-zone').load('/place/'+place+' .cols');
 
   });
     
     
   socket.on('newmail/to/client', function(data){
     console.log('NEW MAIL!');
+    console.log(data);
   });
     
     
@@ -84,7 +87,7 @@ $(function(){
     $(this).addClass('active');
     
     socket.emit('mood/to/server', {
-      floor: floor,
+      place: place,
       mood: $(this).data('value')
     });
   });

@@ -24,6 +24,22 @@ var JsonDB            = require('node-json-db');
 var db = new JsonDB("app/db/trait-union", true, true);
 
 
+
+
+
+var places = [
+  'Lyon 1',
+  'Lyon 2',
+  'Lyon 3',
+  'Lyon 4',
+  'Lyon 5',
+  'Lyon 6',
+  'Lyon 7',
+  'Lyon 8',
+  'Lyon 9',
+];
+
+
 /////////////////////////
 
 io.on('connection', function(socket){
@@ -43,18 +59,18 @@ io.on('connection', function(socket){
     try {
       var isAnythingToday = db.getData("/"+date+"");
     } catch (error) {
-      db.push("/"+date+"", { floors : [] }, true);    
+      db.push("/"+date+"", { places : [] }, true);    
     }
     
     try {
-      if (db.getData("/"+date+"/floors["+data.floor+"]") == null) {
-        db.push("/"+date+"/floors["+data.floor+"]", { moods : [] }, true);
+      if (db.getData("/"+date+"/places["+data.place+"]") == null) {
+        db.push("/"+date+"/places["+data.place+"]", { moods : [] }, true);
       }
     } catch(error) {}
     
     
     
-    db.push("/"+date+"/floors["+data.floor+"]/moods[]", {
+    db.push("/"+date+"/places["+data.place+"]/moods[]", {
       mood: data.mood
     }, true);
     
@@ -81,7 +97,7 @@ io.on('connection', function(socket){
   }
   
   socket.on('pong', function(data){
-    console.log("[PING] Floor "+data.floor+" is still connected");
+    console.log("[PING] Place "+data.place+" is still connected");
   });
   
   var heartBeat = setTimeout(sendHeartbeat, CONFIG.site.socketPingTimeout);
@@ -106,16 +122,25 @@ app.use( bodyParser.urlencoded({
 
 app.set( 'view engine', 'ejs' );
 
-app.get('/floor/:floor/', function (req, res) {  
+app.get('/place/:place/', function (req, res) {  
    
-  var floor = req.params.floor;
+  var place = req.params.place;
   
   var stats = fetchFreshData();
   
-  res.render( __dirname + '/app/views/floor', {
+  res.render( __dirname + '/app/views/place', {
     BASEURL             : CONFIG.site.baseURL,
-    floor               : floor,
-    stats               : stats
+    place               : place,
+    stats               : stats,
+    places              : places
+  });
+});
+
+app.get('/places', function (req, res) {  
+  
+  res.render( __dirname + '/app/views/places', {
+    BASEURL             : CONFIG.site.baseURL,
+    places              : places
   });
 });
 	
@@ -146,43 +171,43 @@ function fetchFreshData() {
     //
     //  Fetch fresh data
     
-    var statsByFloor = {floors: [], moods: {}, moyMood: { mood: null, nb: 0 }};
+    var statsByPlace = {places: [], moods: {}, moyMood: { mood: null, nb: 0 }};
     
     try {
       var isAnythingToday = db.getData("/"+date+"");
     } catch (error) {
-      db.push("/"+date+"", { floors : [] }, true);    
+      db.push("/"+date+"", { places : [] }, true);    
     }
     
     
-    var moodsOfFloorsOfToday = db.getData("/"+date);
+    var moodsOfPlacesOfToday = db.getData("/"+date);
     
-    for (var floorIndex = 0; floorIndex < moodsOfFloorsOfToday.floors.length; floorIndex++) {
-      // In each floor of the day
-      // console.log(floorIndex);
+    for (var placeIndex = 0; placeIndex < moodsOfPlacesOfToday.places.length; placeIndex++) {
+      // In each place of the day
+      // console.log(placeIndex);
       
-    //  statsByFloor.push({floorIndex: {}});
+    //  statsByPlace.push({placeIndex: {}});
   
-        statsByFloor.floors[floorIndex] = { moods: {}, topMood: { mood: null, nb: 0 } };
+        statsByPlace.places[placeIndex] = { moods: {}, topMood: { mood: null, nb: 0 } };
       
-      if (moodsOfFloorsOfToday.floors[floorIndex] != null) {
+      if (moodsOfPlacesOfToday.places[placeIndex] != null) {
         
-        for (var moodIndex = 0; moodIndex < moodsOfFloorsOfToday.floors[floorIndex].moods.length; moodIndex++) {
-          // In each mood of the floor of the day
-          // console.log(moodsOfFloorsOfToday.floors[floorIndex].moods[moodIndex].mood);
+        for (var moodIndex = 0; moodIndex < moodsOfPlacesOfToday.places[placeIndex].moods.length; moodIndex++) {
+          // In each mood of the place of the day
+          // console.log(moodsOfPlacesOfToday.places[placeIndex].moods[moodIndex].mood);
           
-          var mood = moodsOfFloorsOfToday.floors[floorIndex].moods[moodIndex].mood;
+          var mood = moodsOfPlacesOfToday.places[placeIndex].moods[moodIndex].mood;
           
-          if (!statsByFloor.floors[floorIndex].moods.hasOwnProperty(mood)) {
-            statsByFloor.floors[floorIndex].moods[mood] = 1;
+          if (!statsByPlace.places[placeIndex].moods.hasOwnProperty(mood)) {
+            statsByPlace.places[placeIndex].moods[mood] = 1;
           } else {
-            statsByFloor.floors[floorIndex].moods[mood]++;
+            statsByPlace.places[placeIndex].moods[mood]++;
           }
           
-          if (!statsByFloor.moods.hasOwnProperty(mood)) {
-            statsByFloor.moods[mood] = 1;
+          if (!statsByPlace.moods.hasOwnProperty(mood)) {
+            statsByPlace.moods[mood] = 1;
           } else {
-            statsByFloor.moods[mood]++;
+            statsByPlace.moods[mood]++;
           }
         }
         
@@ -190,12 +215,12 @@ function fetchFreshData() {
         //
         // topMood
         
-        for (var mood in statsByFloor.floors[floorIndex].moods) {
+        for (var mood in statsByPlace.places[placeIndex].moods) {
           // If there is more mood occurences here, let's define the top
           
-          if (statsByFloor.floors[floorIndex].moods[mood] >= statsByFloor.floors[floorIndex].topMood.nb) {            
-            statsByFloor.floors[floorIndex].topMood.mood = mood;
-            statsByFloor.floors[floorIndex].topMood.nb = statsByFloor.floors[floorIndex].moods[mood];
+          if (statsByPlace.places[placeIndex].moods[mood] >= statsByPlace.places[placeIndex].topMood.nb) {            
+            statsByPlace.places[placeIndex].topMood.mood = mood;
+            statsByPlace.places[placeIndex].topMood.nb = statsByPlace.places[placeIndex].moods[mood];
           }
         }
         
@@ -206,28 +231,28 @@ function fetchFreshData() {
     //
     // moyMood
     
-    for (var mood in statsByFloor.moods) {
-      if (statsByFloor.moods[mood] >= statsByFloor.moyMood.nb) {            
-        statsByFloor.moyMood.mood = mood;
-        statsByFloor.moyMood.nb = statsByFloor.moods[mood];
+    for (var mood in statsByPlace.moods) {
+      if (statsByPlace.moods[mood] >= statsByPlace.moyMood.nb) {            
+        statsByPlace.moyMood.mood = mood;
+        statsByPlace.moyMood.nb = statsByPlace.moods[mood];
       }
     }
     
     /*
       
-      // topMood for all floor (which floor has the highest nb?)
+      // topMood for all place (which place has the highest nb?)
       
-      for (var floorIndex in statsByFloor.floors) {
-      if (statsByFloor.floors[floorIndex].topMood.nb >= statsByFloor.moyMood.nb) {            
-        statsByFloor.moyMood.mood = statsByFloor.floors[floorIndex].topMood.mood;
-        statsByFloor.moyMood.nb = statsByFloor.floors[floorIndex].topMood.nb;
+      for (var placeIndex in statsByPlace.places) {
+      if (statsByPlace.places[placeIndex].topMood.nb >= statsByPlace.moyMood.nb) {            
+        statsByPlace.moyMood.mood = statsByPlace.places[placeIndex].topMood.mood;
+        statsByPlace.moyMood.nb = statsByPlace.places[placeIndex].topMood.nb;
       }
     }
     */
     
-    console.dir(statsByFloor, { depth: null} );
+    console.dir(statsByPlace, { depth: null} );
     
-    return statsByFloor;
+    return statsByPlace;
 	}
 	
 

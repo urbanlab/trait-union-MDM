@@ -1,7 +1,6 @@
 <link href="<%= BASEURL %>/assets/css/normalize.css" rel='stylesheet' type='text/css'>
 <link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
 
-<!--<%= floor %>-->
 <body id="style">
 
 <div class="head-image"><img class="titre" src="../assets/img/ambiance.png" alt="quelle ambiance ?!"></div>
@@ -16,7 +15,7 @@
 
 <div class="texte">
 <p class="moyenne">En ce moment, <br>
- vous êtes tou·te·s très swing !</p>
+ vous êtes tou·te·s très <span data-reactive-container-of="topmood">swing</span> !</p>
 <p class="ailleurs">Comment ça se passe dans chaque MDM ?</p>
 </div>
 
@@ -29,17 +28,17 @@
       <%= stats.moyMood.mood %>
     </div>
 
-    <div class="floors">
+    <div class="places">
 
-      <% for (var floorIndex = 0; floorIndex < stats.floors.length; floorIndex++) { %>
+      <% for (var placeIndex = 0; placeIndex < stats.places.length; placeIndex++) { %>
 
-        <div class="floor">
-          <div class="floor-index">
-            <%= floorIndex %>
+        <div class="place">
+          <div class="place-index">
+            <%= places[placeIndex] %>
           </div>
 
-          <div class="floor-mood">
-            <%= stats.floors[floorIndex].topMood.mood %>
+          <div class="place-mood">
+            <%= stats.places[placeIndex].topMood.mood %>
           </div>
         </div>
 
@@ -56,7 +55,7 @@
 
 <script>
   var BASEURL = '<%= BASEURL %>';
-  var floor = '<%= floor %>';
+  var place = '<%= place %>';
 </script>
 
 <script src="<%= BASEURL %>/assets/lib/jquery-2.2.4.min.js"></script>
