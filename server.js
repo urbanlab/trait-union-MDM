@@ -162,12 +162,24 @@ app.post('/newmail', function (req, res) {
   res.sendStatus(200);
 });
 
-app.get('/mails/', function (req, res) {  
-  var mailMessages = db.getData("/mails");
+app.get('/mails', function (req, res) { 
+  
+  try {
+    if (db.getData("/mails") == null) {
+      db.push("/mails", [], true);
+    }
+    var mailMessages = db.getData("/mails");
+  } catch(error) {
+    var mailMessages = db.getData("/mails");
+  } 
+  
+  console.log('GET /mails : get emails from db:');
+  console.log(mailMessages);
+  console.log('/end db');
   
   res.render( __dirname + '/app/views/mails', {
     BASEURL             : CONFIG.site.baseURL,
-    mails : mailMessages
+    mails               : mailMessages
   });  
 });
 
