@@ -162,8 +162,16 @@ app.post('/newmail', function (req, res) {
   res.sendStatus(200);
 });
 
-app.get('/mails/', function (req, res) {  
-  var mailMessages = db.getData("/mails");
+app.get('/mails', function (req, res) { 
+  
+  try {
+    if (db.getData("mails") == null) {
+      db.push("mails", [], true);
+    }
+    var mailMessages = db.getData("mails");
+  } catch(error) {
+    var mailMessages = db.getData("mails");
+  } 
   
   res.render( __dirname + '/app/views/mails', {
     BASEURL             : CONFIG.site.baseURL,
