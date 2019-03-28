@@ -51,7 +51,6 @@ html {
 .titre2 {
   width: 40%;
   margin-top: 80px;
-  padding-bottom: 80px;
 }
 
 
@@ -88,6 +87,9 @@ p {
   justify-content: space-between;
 }
 
+.mail {
+  padding-bottom: 80px;
+}
 
 .bulle {
   display: flex;
@@ -109,5 +111,5 @@ p {
 }
 
 .objet {
-
+  display: inline-block;
 }
