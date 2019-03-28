@@ -23,7 +23,7 @@ html {
   flex: 1;
   background:white;
   border-radius:5px;
-  padding:20px;
+  padding:60px;
 }
 
 .floors {
@@ -51,6 +51,7 @@ html {
 .titre2 {
   width: 40%;
   margin-top: 80px;
+  padding-bottom: 80px;
 }
 
 
@@ -67,9 +68,9 @@ p {
 }
 .mood {
   margin: 30px 10px;
-  width: 170px;
+  width: 130px;
+  height: 130px;
   text-align: center;
-  height: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,6 +84,30 @@ p {
 }
 
 .pictos {
-  width: 120px;
+  width: 85px;
   justify-content: space-between;
+}
+
+
+.bulle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 30px;
+  margin-right: 200px;
+  margin-left: 200px;
+  background-color: white;
+
+  text-align: center;
+  font-family: 'Overpass', sans-serif;
+
+  border-style: solid;
+  border-color: white;
+  border-width: thick;
+  border-radius: 10px;
+}
+
+.objet {
+
 }
