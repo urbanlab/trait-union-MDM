@@ -8,7 +8,7 @@ module.exports = {
     // Pour lancer le script en production sur un réseau, 
     // mettre à jour et utiliser la ligne suivante
     
-    // baseURL           : 'http://192.168.20.40:5000',
+//     baseURL           : 'http://lab.erasme.org:5000',
     
     port              : 5000,
     
