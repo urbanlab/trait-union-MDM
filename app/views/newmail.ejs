@@ -7,8 +7,8 @@
 
 <script type="text/javascript">
   var socket = io(BASEURL);
-  
-  $(function(){      
+
+  $(function(){
     socket.emit('newmail/to/server', {hey:'yo'});
   });
 

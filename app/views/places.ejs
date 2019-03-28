@@ -1,0 +1,24 @@
+<link href="<%= BASEURL %>/assets/css/normalize.css" rel='stylesheet' type='text/css'>
+<link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
+
+<body id="style">
+
+<h1>Accéder à l'interface de la MDM de…</h1>
+
+<% for (var placeIndex = 0; placeIndex < places.length; placeIndex++) { %>
+  <a href="<%= BASEURL %>/place/<%= placeIndex %>"><%= places[placeIndex]; %></a> <br>
+<% } %>
+
+
+
+
+
+<script>
+  var BASEURL = '<%= BASEURL %>';
+</script>
+
+<script src="<%= BASEURL %>/assets/lib/jquery-2.2.4.min.js"></script>
+<script src="<%= BASEURL %>/assets/lib/socket.io-1.2.0.js"></script>
+<script src="<%= BASEURL %>/assets/js/js.js"></script>
+
+</body>
