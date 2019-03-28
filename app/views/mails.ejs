@@ -1,12 +1,14 @@
 <div class="actus_inner">
-
+  <link href="<%= BASEURL %>/assets/css/normalize.css" rel='stylesheet' type='text/css'>
+  <link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
+  
 <% for (var i = 0; i < mails.length; i++) { %>
 
   <div class="bulle">
   <div class="objet"> <%= mails[i].subject %> </div>
-  <div class="objet"> <%= mails[i].body %> </div>
-  <div class="objet"> <%= mails[i].from__name %> </div>
-  <div class="objet"> <%= mails[i].from_mail %> </div>
+  <div class="corps"> <%= mails[i].body %> </div>
+  <div class="nom"> <%= mails[i].from_name %> </div>
+  <div class="mail"> <%= mails[i].from_mail %> </div>
   </div>
 <% } %>
 
