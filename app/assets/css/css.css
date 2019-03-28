@@ -50,9 +50,11 @@ html {
 }
 .titre2 {
   width: 40%;
-  margin-top: 80px;
+  margin-top: 120px;
 }
-
+.ailleurs {
+  margin-top: 60px;
+}
 
 p {
   font-family: 'Overpass', sans-serif;
@@ -115,4 +117,29 @@ p {
 .mail, .nom {
   color: grey;
   font-size: 18px;
+}
+
+.place {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  background-color: white;
+  border-style: solid;
+  border-width: 10px;
+  border-color: white;
+  border-radius: 200px;
+  text-align: center;
+  font-family: 'Overpass', sans-serif;
+  font-size: 18px;
+
+  background-size: auto 22px;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+}
+.places {
+
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }

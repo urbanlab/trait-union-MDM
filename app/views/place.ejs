@@ -1,7 +1,17 @@
 <link href="<%= BASEURL %>/assets/css/normalize.css" rel='stylesheet' type='text/css'>
 <link href="<%= BASEURL %>/assets/css/css.css" rel='stylesheet' type='text/css'>
 
+
 <body id="style">
+
+<style type="text/css">
+  <% for (var i = 0; i < moods.length; i++) { %>
+.place-of-mood-<%= moods[i] %> {
+  background-image:url("<%= BASEURL %>/assets/img/<%= moods[i] %>.png")
+}
+<% } %>
+</style>
+
 
 <div class="head-image"><img class="titre" src="../assets/img/ambiance.png" alt="quelle ambiance ?!"></div>
 
@@ -16,13 +26,13 @@
 <div class="texte">
 <p class="moyenne">En ce moment, <br>
  vous êtes tou·te·s très <span data-reactive-container-of="topmood">swing</span> !</p>
- 
-<% for (var index in moods) { 
+
+<% for (var index in moods) {
   for (var i = 1; i <= 5; i++) { %>
   <audio src="<%= BASEURL %>/assets/son/<%= moods[index] %>/<%= i %>.mp3" class="son" data-mood="<%= moods[index] %>" data-i="<%= i %>" preload></audio>
 <% } } %>
 
- 
+
 <p class="ailleurs">Comment ça se passe dans chaque MDM ?</p>
 </div>
 
@@ -39,13 +49,13 @@
 
       <% for (var placeIndex = 0; placeIndex < stats.places.length; placeIndex++) { %>
 
-        <div class="place">
+        <div class="place place-of-mood-<%= stats.places[placeIndex].topMood.mood %>">
           <div class="place-index">
             <%= places[placeIndex] %>
           </div>
 
           <div class="place-mood">
-            <%= stats.places[placeIndex].topMood.mood %>
+
           </div>
         </div>
 
